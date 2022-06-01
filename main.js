@@ -2,11 +2,36 @@
     Remember to use comments to define the algorithm(s) needed
     BEFORE you write any code
 */
-const calculateYearlyExpenses = () => { }
+const calculateYearlyExpenses = (applicant) => {
+    //The first function should calculate the total yearly expenses for each person.
+    const yearlyExpense = (applicant.monthlyExpenses * 12)
+    return yearlyExpense
+}
 
-const calculateExpensesPercentage = () => { }
+const calculateExpensesPercentage = (applicant, yearlyExpense) => {
+    //It should divide the yearly expenses by the annual salary, 
+    //and then take that sum and multiply it by 100
+    const percentage = ((yearlyExpense / applicant.salary) * 100)
+    return percentage
+}
 
-const isQualified = () => { }
+const isQualified = (applicant, percentage) => {
+    //If the percentage of expenses to salary is less than 10, 
+    //then the applicant object's mortgage property - which is also an object - 
+    //should have a new property added named qualified and its value should be true. 
+    //It should have another property added to it named amount. 
+    //The value should be the person's salary multiplied by 5.
+    if (percentage < 10) {
+        applicant.mortgage.qualified = true
+        applicant.mortgage.amount = (applicant.salary * 5)
+    } else if (percentage > 10) {
+        //If the percentage is greater than 10, the value of the qualified property on the mortgage object 
+        //should be false. The value of the amount property on the mortgage object should be 0.
+        applicant.mortgage.qualified = false
+        applicant.mortgage.amount = 0
+    }
+    return applicant
+}
 
 const mortgageApplicants = [
     { id: 1, name: "James Runolfsdottir", monthlyExpenses: 343.7, salary: 49938.68, mortgage: {}, address: "866 Weissnat Forks", city: "South Dario" },
@@ -26,10 +51,16 @@ const mortgageApplicants = [
     Iterate the array of mortgage applicants and use your
     functions to determine if they are qualified for a mortgage
 */
-
-
-
-
+let qualificationString = ``
+for (const applicant of mortgageApplicants) {
+    const findYearlyExpense = calculateYearlyExpenses(applicant);
+    const findPercentage = calculateExpensesPercentage(applicant, findYearlyExpense);
+    const findQualification = isQualified(applicant, findPercentage);
+    if (applicant.mortgage.qualified === true) {
+        qualificationString += `${applicant.name} is qualified for a maximum mortgage of $${applicant.mortgage.amount}\n`
+    }
+}
+console.log(qualificationString)
 
 
 
